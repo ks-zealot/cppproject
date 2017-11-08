@@ -87,7 +87,7 @@ struct char_cont {
 std::vector<std::string> data;
 std::vector<std::pair<int *, char_cont **>> encrypted;
 
-void dump(int *counter, char_cont *data[], ofstream &output) {
+void dump(int *counter, char_cont *data[], ostream &output) {
 
   for (int i = 0; i < *counter; i++) {
     if ((*data[i]).i > 0) {
@@ -103,7 +103,6 @@ void dump(int *counter, char_cont *data[], ofstream &output) {
 }
 
 void encrypt(int *counter, string &str, char_cont *data[]) {
-  cout << "start encrypt" << endl;
   unsigned int length = std::char_traits<char>::length(str.c_str());
   unsigned int strLen = str.length();
   unsigned int u = 0;
@@ -125,10 +124,9 @@ void encrypt(int *counter, string &str, char_cont *data[]) {
       data[*counter] = cont;
     }
     u += charsize;
-    counter++;
+    (*counter)++;
     charCount += 1;
   }
-  cout << "end encrypt" << endl;
 }
 
 int main(int args, char **argv) {
@@ -153,7 +151,7 @@ int main(int args, char **argv) {
           char_cont **d = new char_cont *[length];
           int *counter = new int(0);
           pool.doJob(std::bind(encrypt, counter, cur, d));
-          // encrypted.push_back(std::make_pair(counter, d));
+          encrypted.push_back(std::make_pair(counter, d));
         }
         for (std::vector<pair<int *, char_cont **>>::iterator itr =
                  encrypted.begin();
